@@ -3,15 +3,6 @@ local Path = require("plenary.path")
 
 local lspconfig_util = require("lspconfig.util")
 
-local DEFAULT_OPTS = {
-  column_width = 120,
-  line_endings = "Unix",
-  indent_type = "Tabs",
-  indent_width = 4,
-  quote_style = "AutoPreferDouble",
-  call_parentheses = "Always",
-}
-
 local M = {}
 M._config = {}
 
@@ -31,13 +22,13 @@ local function find_stylua(path)
         break
       end
 
-      local stylua_path = Path:new { dir, "stylua.toml" }
+      local stylua_path = Path:new({ dir, "stylua.toml" })
       if stylua_path:exists() then
         M._config[path] = stylua_path:absolute()
         break
       end
 
-      stylua_path = Path:new { dir, ".stylua.toml" }
+      stylua_path = Path:new({ dir, ".stylua.toml" })
       if stylua_path:exists() then
         M._config[path] = stylua_path:absolute()
         break
@@ -47,34 +38,15 @@ local function find_stylua(path)
 
   return M._config[path]
 end
-function M.setup(opts)
-  local conf = vim.tbl_deep_extend("force", DEFAULT_OPTS, opts or {})
-
-  M._config.column_width = conf.column_width
-  M._config.line_endings = conf.line_endings
-  M._config.indent_type = conf.indent_type
-  M._config.indent_width = conf.indent_width
-  M._config.quote_style = conf.quote_style
-  M._config.call_parentheses = conf.call_parentheses
-end
 
 function M.format(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   local filepath = Path:new(vim.api.nvim_buf_get_name(bufnr)):absolute()
   local stylua_toml = find_stylua(filepath)
 
-  local args
+  local args = {}
   if stylua_toml then
-    args  = { "--config-path", stylua_toml }
-  else
-    args = {
-      "--column-width", M._config.column_width,
-      "--line-endings", M._config.line_endings,
-      "--indent-type", M._config.indent_type,
-      "--indent-width", M._config.indent_width,
-      "--quote-style", M._config.quote_style,
-      "--call-parentheses", M._config.call_parentheses,
-    }
+    args = { "--config-path", stylua_toml }
   end
 
   table.insert(args, "-")
@@ -84,15 +56,20 @@ function M.format(bufnr)
     command = "stylua",
     args = args,
     writer = vim.api.nvim_buf_get_lines(0, 0, -1, false),
-    on_stderr = function (_, data)
+    on_stderr = function(_, data)
       table.insert(errors, data)
-    end
+    end,
   })
 
   local output = job:sync()
   if job.code ~= 0 then
     vim.schedule(function()
-      error(string.format("[stylua] %s", errors[0] or "Failed to format due to errors"))
+      error(
+        string.format(
+          "[stylua] %s",
+          errors[1] or "Failed to format due to errors"
+        )
+      )
     end)
 
     return
