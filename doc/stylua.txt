@@ -1,0 +1,21 @@
+===============================================================================
+                                                                   *stylua.nvim*
+`stylua.nvim` is a simple plugin that format you Lua code using StyLua
+
+Getting started with stylua.nvim
+
+    1. Make sure you have all requirements installed (`StyLua`, `plenary.nvim`).
+    2. Run |stylua.format| in any lua file.
+    3. Profit
+
+To find out more:
+https://github.com/wesleimp/stylua.nvim
+
+
+stylua.format({bufnr})                                           *stylua.format*
+    Format your Lua code. If {bufnr} is not set, the current buffer will be
+    used to format >
+
+    :lua require("stylua").format()
+<
+vim:tw=78:ts=8:ft=help:norl:
