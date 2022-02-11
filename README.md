@@ -9,6 +9,8 @@ stylua.nvim is a simple plugin that format you Lua code using StyLua
 
 ## Installation
 
+Install this plugin by using your favorite plugin manager
+
 **Packer**
 
 ```lua
@@ -22,6 +24,8 @@ Plug 'wesleimp/stylua.nvim'
 ```
 
 ## Usage
+
+Format you code with a simple command
 
 ```vim
 :lua require("stylua").format()
