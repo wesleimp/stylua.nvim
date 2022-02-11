@@ -1,13 +1,12 @@
 local Job = require("plenary.job")
 local Path = require("plenary.path")
-
-local lspconfig_util = require("lspconfig.util")
+local util = require("lspconfig.util")
 
 local M = {}
+
 M._config = {}
 
-local root_finder = lspconfig_util.root_pattern(".git")
-
+local root_finder = util.root_pattern(".git")
 local function find_stylua(path)
   if M._config[path] == nil then
     local file_path = Path:new(path)
@@ -45,6 +44,8 @@ function M.format(bufnr)
   local stylua_toml = find_stylua(filepath)
 
   local args = {}
+
+  -- If stylua.toml was not found, run with cli defaults
   if stylua_toml then
     args = { "--config-path", stylua_toml }
   end
