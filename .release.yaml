@@ -1,0 +1,15 @@
+release:
+  github:
+    owner: wesleimp
+    repo: stylua.nvim
+
+changelog:
+  from: remote
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+  footer: |
+    ---
+    Generated with [release-cli](https://github.com/release-cli/release)
