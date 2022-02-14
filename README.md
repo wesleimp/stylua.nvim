@@ -1,6 +1,6 @@
 # stylua.nvim
 
-stylua.nvim is a simple plugin that format you Lua code using StyLua
+stylua.nvim is a simple plugin that format your Lua code using StyLua
 
 ## Requirements
 
