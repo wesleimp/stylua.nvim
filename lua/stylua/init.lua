@@ -42,7 +42,7 @@ function M.format(opts)
   opts = opts or {}
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
 
-  local stylua_toml = ""
+  local stylua_toml
   if opts.config_path then
     stylua_toml = Path:new(opts.config_path):absolute()
   else
