@@ -12,9 +12,22 @@ To find out more:
 https://github.com/wesleimp/stylua.nvim
 
 
-stylua.format({bufnr})                                           *stylua.format*
-    Format your Lua code. If {bufnr} is not set, the current buffer will be
+stylua.format({opts})                                           *stylua.format*
+    Format your Lua code. If {opts} is not set, some defaults will be
     used to format >
+
+    Parameters: ~
+        {opts} (table)  options to pass to the formatter
+
+    Options: ~
+        {bufnr}             (number)   specify the buffer number where
+                                       treesitter should run. (default:
+                                       current buffer)
+
+        {config_path}       (string)   specify the config file to use.
+                                       (default: .stylua.toml or
+                                       stylua.toml defined in the
+                                       project)
 
     :lua require("stylua").format()
 <
