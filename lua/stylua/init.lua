@@ -38,9 +38,12 @@ local function find_stylua(path)
   return M._config[path]
 end
 
-function M.format(bufnr)
-  bufnr = bufnr or vim.api.nvim_get_current_buf()
-  local filepath = Path:new(vim.api.nvim_buf_get_name(bufnr)):absolute()
+function M.format(opts)
+  opts = opts or {}
+  local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
+  local toml_file = opts.toml_file and vim.api.nvim_buf_get_name(bufnr)
+
+  local filepath = Path:new(toml_file):absolute()
   local stylua_toml = find_stylua(filepath)
 
   local args = {}
